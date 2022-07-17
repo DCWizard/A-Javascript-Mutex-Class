@@ -43,8 +43,6 @@ class Mutex {
           let ThisState             = ThisObj.Lock(ThisName);
           if(!(ThisState)){
             console.warn("Failed to get lock", ThisName, ThisState);
-          } else {
-            ThisObj.LockStack.push(ThisMutexObj);
           }
           resolve(ThisState); 
         });
@@ -87,6 +85,7 @@ class Mutex {
       if(_InterF) {return false;}
       _InterF               = true;
       let ThisMutexObj      = new MutexObj(ThisName, "Locked");
+      this.LockStack.push(ThisMutexObj);
       OneLock               = ThisMutexObj;
       return true;
     }
